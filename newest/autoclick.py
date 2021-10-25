@@ -10,59 +10,88 @@ try:
     print("Required modules are installed.")
 except: ModuleNotFoundError: print("Required modules are not installed. installing modules..."); os.system("pip3 install keyboard"); os.system("pip3 install mouse"); os.system('pip3 install time'); os.system('pip3 install logging'); quit()
 
-print('Press the "]" button to stop it from clicking. and hit the ~ button to quit it.')
+print('Press the "]" button to stop it from clicking/typing. and hit the ~ button to quit it.')
 
 # Asking for cps and starting delay
 
-try:
-    delaybef = input('Delay BEFORE THE clicking starts: ')
-    delaybeftrue = int(delaybef)
-except:
-    print('Must be a number.')
-    quit()
+def clicking():
+    try:
+        delaybef = input('Delay BEFORE THE clicking starts: ')
+        delaybeftrue = int(delaybef)
+    except:
+        print('Must be a number.')
+        quit()
 
-delay = input('CPS? (N for no delay): ')
+    delay = input('CPS? (N for no delay): ')
 
-#Determine if "N" was entered
+    #Determine if "N" was entered
 
-try:
-    deltruint = int(delay)
-    deltruint = 1 / deltruint
-except:
-    deltrustr = str(delay)
+    try:
+        deltruint = int(delay)
+        deltruint = 1 / deltruint
+    except:
+        deltrustr = str(delay)
 
-try:
-    deltruint = deltruint
-    isint = 1
-except:
-    isint = 0
+    try:
+        deltruint = deltruint
+        isint = 1
+    except:
+        isint = 0
 
-print('Processing complete.')
+    print('Processing complete.')
 
-time.sleep(delaybeftrue)
+    time.sleep(delaybeftrue)
 
-if isint == 1:
-    while True:
-        if keyboard.is_pressed('`'):
-            quit()
-        try:
-            if not keyboard.is_pressed(']'):
+    if isint == 1:
+        while True:
+            if keyboard.is_pressed('`'):
+                quit()
+            try:
+                if not keyboard.is_pressed(']'):
+                    mouse.click('left')
+                    time.sleep(deltruint)
+            except Exception as exc:
+                #logger
+                print("Unknown Error occured. Please contact program owner with log file")
+                logging.basicConfig(filename='excoor.log', level=logging.DEBUG('Usually unreachable error occured: ' + exc), force=True)
+                quit()
+    else:
+        while True:
+            if keyboard.is_pressed('`'):
+                quit()
+            try:
+               if not keyboard.is_pressed(']'):
                 mouse.click('left')
-                time.sleep(deltruint)
-        except Exception as exc:
-            #logger
-            print("Unknown Error occured. Please contact program owner with log file")
-            logging.basicConfig(filename='excoor.log', level=logging.DEBUG('Usually unreachable error occured: ' + exc), force=True)
-            quit()
+            except Exception as exc:
+                #logger
+                print("Unknown Error occured. Please contact program owner with code below:")
+                logging.basicConfig(filename='excoor.log', level=logging.DEBUG('Usually unreachable error occured: ' + exc), force=True)
+                quit()
+
+def typing():
+    keys = input('Enter sentence to repeat type (letters must be seperated by spaces.)')
+    try:
+        keyslist = keys.split(None)
+        length = len(keys)
+        while True:
+            if keyboard.is_pressed('`'):
+                quit()
+                
+            i = 0
+            while i < length:
+                print(keyslist[i])
+                i = i + 1
+    except:
+        print('Letters must be seperated by spaces.')
+        quit()
+
+
+mouorkey = input('Auto clicker or auto typer? (1/2): ')
+
+if mouorkey == '1':
+    clicking()
+elif mouorkey == '2':
+    typing()
 else:
-    while True:
-        if keyboard.is_pressed('`'):
-            quit()
-        try:
-           if not keyboard.is_pressed(']'):
-            mouse.click('left')
-        except Exception as exc:
-            #logger
-            print("Unknown Error occured. Please contact program owner with code below:")
-            logging.basicConfig(filename='excoor.log', level=logging.DEBUG('Usually unreachable error occured: ' + exc), force=True)
-            quit()
+    print('You must enter 1 or 2')
+    quit()
