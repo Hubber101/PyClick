@@ -22,8 +22,8 @@ def selection():
         else:
             print('You must enter 1 or 2')
             selection()
-    except:
-        print('You must enter a number')
+    except Exception as exp:
+        print(exp)
         selection()
 
 print('Press the "]" button to stop it from clicking/typing. and hit the ~ button to quit it.')
@@ -38,18 +38,12 @@ def clicking():
         print('Must be a number.')
         selection()
 
-    delay = input('CPS? (N for no delay): ')
+    delay = input('CPS?')
 
     #Determine if "N" was entered
 
     try:
-        deltruint = int(delay)
-        deltruint = 1 / deltruint
-    except:
-        deltrustr = str(delay)
-
-    try:
-        deltruint = deltruint
+        int(delay)
         isint = 1
     except:
         isint = 0
@@ -65,7 +59,7 @@ def clicking():
             try:
                 if not keyboard.is_pressed(']'):
                     mouse.click('left')
-                    time.sleep(deltruint)
+                    time.sleep(delaybeftrue)
             except Exception as exc:
                 #logger
                 print("Unknown Error occured. Please contact program owner with log file")
@@ -85,18 +79,45 @@ def clicking():
                 quit()
 
 def typing():
-    keys = input('Enter sentence to repeat type (letters must be seperated by spaces.)')
-    try:
-        keyslist = keys.split(None)
-        length = len(keys)
-        while True:
-            if keyboard.is_pressed('`'):
-                quit()
+    keys = input('Enter sentence to repeat type (letters must be seperated by spaces.): ')
+    startdelay = input('Delay before macro pressing starts: ')
+    pps = input('Enter key presses per second (N for no delay): ')
+    loopdelay = input('enter delay between key press loops')
+    if pps == 'N' or pps == 'n':
+        try:
+            keyslist = keys.split(' ')
+            length = len(keyslist)
+            time.sleep(startdelay)
+            while True:
+                if keyboard.is_pressed('`'):
+                    quit()
+
+                i = 0
+                while i < length:
+                    keyboard.press(keyslist[i])
+                    i = i + 1
+                time.sleep(loopdelay)
+        except Exception as exp:
+            print('Untraceable error occured.')
+            selection()
+    else:
+        try:
+            keyslist = keys.split(' ')
+            length = len(keyslist)
+            time.sleep(startdelay)
+            while True:
+                if keyboard.is_pressed('`'):
+                    quit()
                 
-            i = 0
-            while i < length:
-                print(keyslist[i])
-                i = i + 1
-    except:
-        print('Letters must be seperated by spaces.')
-        selection()
+                i = 0
+                while i < length:
+                    keyboard.press(keyslist[i])
+                    i = i + 1
+                    time.sleep(pps)
+                time.sleep(loopdelay)
+        except Exception as exp:
+            print('You must enter N or a number')
+            selection()
+
+
+selection()
