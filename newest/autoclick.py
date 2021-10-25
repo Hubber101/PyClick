@@ -81,7 +81,7 @@ def clicking():
 def typing():
     keys = input('Enter sentence to repeat type (letters must be seperated by spaces.): ')
     startdelay = input('Delay before macro pressing starts: ')
-    pps = input('Enter key presses per second (N for no delay): ')
+    pps = input('Enter key presses per second: ')
     loopdelay = input('enter delay between key press loops')
     if pps == 'N' or pps == 'n':
         try:
