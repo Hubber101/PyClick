@@ -100,7 +100,3 @@ def typing():
     except:
         print('Letters must be seperated by spaces.')
         selection()
-
-
-
-
