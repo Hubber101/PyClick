@@ -10,6 +10,22 @@ try:
     print("Required modules are installed.")
 except: ModuleNotFoundError: print("Required modules are not installed. installing modules..."); os.system("pip3 install keyboard"); os.system("pip3 install mouse"); os.system('pip3 install time'); os.system('pip3 install logging'); quit()
 
+def selection():
+    mouorkey = input('Auto clicker or auto typer? (1/2/quit): ')
+    try:
+        if mouorkey == '1':
+            clicking()
+        elif mouorkey == '2':
+            typing()
+        elif mouorkey == 'quit':
+            quit()
+        else:
+            print('You must enter 1 or 2')
+            selection()
+    except:
+        print('You must enter a number')
+        selection()
+
 print('Press the "]" button to stop it from clicking/typing. and hit the ~ button to quit it.')
 
 # Asking for cps and starting delay
@@ -20,7 +36,7 @@ def clicking():
         delaybeftrue = int(delaybef)
     except:
         print('Must be a number.')
-        quit()
+        selection()
 
     delay = input('CPS? (N for no delay): ')
 
@@ -83,19 +99,8 @@ def typing():
                 i = i + 1
     except:
         print('Letters must be seperated by spaces.')
-        quit()
+        selection()
 
 
-mouorkey = input('Auto clicker or auto typer? (1/2): ')
 
-try:
-    if mouorkey == '1':
-        clicking()
-    elif mouorkey == '2':
-        typing()
-    else:
-        print('You must enter 1 or 2')
-        quit()
-except:
-    print('You must enter a number')
-    quit()
+
