@@ -1,7 +1,5 @@
 import os
 
-from keyboard import parse_hotkey_combinations
-
 #Auto installer
 
 try:
