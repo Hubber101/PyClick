@@ -88,10 +88,14 @@ def typing():
 
 mouorkey = input('Auto clicker or auto typer? (1/2): ')
 
-if mouorkey == '1':
-    clicking()
-elif mouorkey == '2':
-    typing()
-else:
-    print('You must enter 1 or 2')
+try:
+    if mouorkey == '1':
+        clicking()
+    elif mouorkey == '2':
+        typing()
+    else:
+        print('You must enter 1 or 2')
+        quit()
+except:
+    print('You must enter a number')
     quit()
